@@ -53,19 +53,20 @@ class BaseInvitationsAdapter(object):
                 if ext == 'txt' and not bodies:
                     # We need at least one body
                     raise
-        if 'txt' in bodies:
+        '''if 'txt' in bodies:
             msg = EmailMultiAlternatives(subject,
                                          bodies['txt'],
                                          settings.DEFAULT_FROM_EMAIL,
                                          [email])
             if 'html' in bodies:
                 msg.attach_alternative(bodies['html'], 'text/html')
-        else:
-            msg = EmailMessage(subject,
-                               bodies['html'],
-                               settings.DEFAULT_FROM_EMAIL,
-                               [email])
-            msg.content_subtype = 'html'  # Main content is now text/html
+        else:'''
+        msg = EmailMessage(subject,
+                           bodies['html'],
+                           'Xbox Sales App <noreply@motius.de>',
+                           [email],
+                           reply_to=['xboxsalesapp@microsoft.com'],)
+        msg.content_subtype = 'html'  # Main content is now text/html
         return msg
 
     def send_mail(self, template_prefix, email, context):
