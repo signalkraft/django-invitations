@@ -16,7 +16,6 @@ from .utils import import_attribute
 
 # Code credits here to django-allauth
 class BaseInvitationsAdapter(object):
-
     def stash_verified_email(self, request, email):
         request.session['account_verified_email'] = email
 
@@ -26,11 +25,12 @@ class BaseInvitationsAdapter(object):
         return ret
 
     def format_email_subject(self, subject):
-        prefix = app_settings.EMAIL_SUBJECT_PREFIX
+        '''prefix = app_settings.EMAIL_SUBJECT_PREFIX
         if prefix is None:
             site = Site.objects.get_current()
             prefix = "[{name}] ".format(name=site.name)
-        return prefix + force_text(subject)
+        return prefix + force_text(subject)'''
+        return 'You are invited to join the Xbox Sales App'
 
     def render_mail(self, template_prefix, email, context):
         """
@@ -65,7 +65,7 @@ class BaseInvitationsAdapter(object):
                            bodies['html'],
                            'Xbox Sales App <noreply@motius.de>',
                            [email],
-                           reply_to=['xboxsalesapp@microsoft.com'],)
+                           reply_to=['xboxsalesapp@microsoft.com'], )
         msg.content_subtype = 'html'  # Main content is now text/html
         return msg
 
@@ -75,7 +75,7 @@ class BaseInvitationsAdapter(object):
 
     def is_open_for_signup(self, request):
         if hasattr(request, 'session') and request.session.get(
-                'account_verified_email'):
+            'account_verified_email'):
             return True
         elif app_settings.INVITATION_ONLY is True:
             # Site is ONLY open for invites
@@ -113,7 +113,7 @@ class BaseInvitationsAdapter(object):
 def get_invitations_adapter():
     # Compatibility with legacy allauth only version.
     LEGACY_ALLAUTH = hasattr(settings, 'ACCOUNT_ADAPTER') and \
-        settings.ACCOUNT_ADAPTER == 'invitations.models.InvitationsAdapter'
+                     settings.ACCOUNT_ADAPTER == 'invitations.models.InvitationsAdapter'
     if LEGACY_ALLAUTH:
         # defer to allauth
         from allauth.account.adapter import get_adapter

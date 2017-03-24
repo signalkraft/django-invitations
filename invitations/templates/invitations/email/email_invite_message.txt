@@ -4,9 +4,12 @@
 
 Hello,
 
-You ({{ email }}) have been invited to join {{ site_name }}
+You ({{ email }}) have been invited to join the Xbox Sales App!
 
-If you'd like to join, please go to {{ invite_url }}
+If you'd like to join, please go to {{ invite_url }} and download the app!
 
+Thank you!
+
+The Xbox Team
 {% endblocktrans %}
 {% endautoescape %}
